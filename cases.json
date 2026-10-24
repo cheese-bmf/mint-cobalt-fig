@@ -155,7 +155,7 @@
     "url": "https://cheese-bmf.github.io/mint-cobalt-fig/cases/body-cap/",
     "rule": "R10 본문 1MB 상한",
     "expect": {
-      "code": null,
+      "code": 620002,
       "value": {
         "title": null
       }

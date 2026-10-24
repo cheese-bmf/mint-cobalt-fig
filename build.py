@@ -155,9 +155,9 @@ case(
     "<head> 안 1.1MB 패딩 뒤에 og 태그 — 상한에서 읽기를 멈추므로 og 를 못 읽는다",
     ["<!-- " + "x" * 1_150_000 + " -->", meta("og:title", "Fixture · 1MB 뒤의 og:title"), ICON,
      "<title>Fixture · 1MB 뒤의 title</title>"],
-    {"code": None, "value": {"title": None}},
-    "도메인·URL 카드 + 「미리보기 없음」(제목을 못 읽음 — code 0 또는 620002)",
-    note="code 는 구현에 따라 0(빈 카드) 또는 620002(실패) — 어느 쪽이든 title 이 없어야 한다.",
+    {"code": 620002, "value": {"title": None}},
+    "도메인·URL 카드 + 「미리보기 없음」(제목을 못 읽음)",
+    note="상한에서 읽기를 멈추면 수집 실패(620002)로 수렴한다 — 2026-10-24 실측.",
 )
 case(
     "locale-ko", "A. OG", "R16 선언 언어",

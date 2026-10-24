@@ -25,7 +25,7 @@ button{font:inherit;font-size:12px;padding:3px 8px;border-radius:6px;border:1px 
 <p><a href="../../">← 전체 케이스</a> · <span class="tag">A. OG</span> <span class="tag">R10 본문 1MB 상한</span></p>
 <h1>body-cap</h1>
 <p>&lt;head&gt; 안 1.1MB 패딩 뒤에 og 태그 — 상한에서 읽기를 멈추므로 og 를 못 읽는다</p>
-<p class="muted">code 는 구현에 따라 0(빈 카드) 또는 620002(실패) — 어느 쪽이든 title 이 없어야 한다.</p>
+<p class="muted">상한에서 읽기를 멈추면 수집 실패(620002)로 수렴한다 — 2026-10-24 실측.</p>
 <h2>이 페이지의 &lt;head&gt; 태그</h2>
 <pre>&lt;!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx …(1,150,009자 생략)… --&gt;
 &lt;meta property=&quot;og:title&quot; content=&quot;Fixture · 1MB 뒤의 og:title&quot;&gt;
@@ -33,13 +33,13 @@ button{font:inherit;font-size:12px;padding:3px 8px;border-radius:6px;border:1px 
 &lt;title&gt;Fixture · 1MB 뒤의 title&lt;/title&gt;</pre>
 <h2>기대 응답</h2>
 <pre>{
-  &quot;code&quot;: null,
+  &quot;code&quot;: 620002,
   &quot;value&quot;: {
     &quot;title&quot;: null
   }
 }</pre>
 <h2>글쓰기 화면에서 보일 카드</h2>
-<p>도메인·URL 카드 + 「미리보기 없음」(제목을 못 읽음 — code 0 또는 620002)</p>
+<p>도메인·URL 카드 + 「미리보기 없음」(제목을 못 읽음)</p>
 <p class="muted">URL: <code>https://cheese-bmf.github.io/mint-cobalt-fig/cases/body-cap/</code></p>
 
 </main></body>
