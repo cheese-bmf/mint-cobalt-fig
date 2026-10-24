@@ -1,0 +1,414 @@
+[
+  {
+    "id": "og-basic",
+    "url": "https://cheese-bmf.github.io/mint-cobalt-fig/cases/og-basic/",
+    "rule": "기본",
+    "expect": {
+      "code": 0,
+      "value": {
+        "type": "EXTERNAL",
+        "title": "Fixture · 기본 OG 카드",
+        "description": "og 태그 3종이 모두 있는 페이지",
+        "image_url": "https://cheese-bmf.github.io/mint-cobalt-fig/assets/og-blue.png",
+        "favicon_url": "https://cheese-bmf.github.io/mint-cobalt-fig/assets/icon-32.png"
+      },
+      "absent": [
+        "mod"
+      ]
+    }
+  },
+  {
+    "id": "og-title-fallback",
+    "url": "https://cheese-bmf.github.io/mint-cobalt-fig/cases/og-title-fallback/",
+    "rule": "title 대체",
+    "expect": {
+      "code": 0,
+      "value": {
+        "type": "EXTERNAL",
+        "title": "Fixture · title 태그 대체",
+        "image_url": null
+      }
+    }
+  },
+  {
+    "id": "og-no-title",
+    "url": "https://cheese-bmf.github.io/mint-cobalt-fig/cases/og-no-title/",
+    "rule": "title null = 실패",
+    "expect": {
+      "code": 0,
+      "value": {
+        "type": "EXTERNAL",
+        "title": null
+      }
+    }
+  },
+  {
+    "id": "og-blank-title",
+    "url": "https://cheese-bmf.github.io/mint-cobalt-fig/cases/og-blank-title/",
+    "rule": "R13-blank",
+    "expect": {
+      "code": 0,
+      "value": {
+        "type": "EXTERNAL",
+        "title": null
+      }
+    }
+  },
+  {
+    "id": "og-image-relative",
+    "url": "https://cheese-bmf.github.io/mint-cobalt-fig/cases/og-image-relative/",
+    "rule": "R11-relative",
+    "expect": {
+      "code": 0,
+      "value": {
+        "title": "Fixture · 상대 og:image",
+        "image_url": "https://cheese-bmf.github.io/mint-cobalt-fig/assets/og-green.png"
+      }
+    }
+  },
+  {
+    "id": "og-image-base",
+    "url": "https://cheese-bmf.github.io/mint-cobalt-fig/cases/og-image-base/",
+    "rule": "R11-base",
+    "expect": {
+      "code": 0,
+      "value": {
+        "title": "Fixture · base href 기준 og:image",
+        "image_url": "https://cheese-bmf.github.io/mint-cobalt-fig/assets/og-orange.png"
+      }
+    }
+  },
+  {
+    "id": "og-image-unsafe",
+    "url": "https://cheese-bmf.github.io/mint-cobalt-fig/cases/og-image-unsafe/",
+    "rule": "R11 스킴",
+    "expect": {
+      "code": 0,
+      "value": {
+        "title": "Fixture · javascript: og:image",
+        "image_url": null,
+        "favicon_url": "https://cheese-bmf.github.io/mint-cobalt-fig/assets/icon-32.png"
+      }
+    }
+  },
+  {
+    "id": "favicon-compact",
+    "url": "https://cheese-bmf.github.io/mint-cobalt-fig/cases/favicon-compact/",
+    "rule": "favicon 순서",
+    "expect": {
+      "code": 0,
+      "value": {
+        "title": "Fixture · 축약형(favicon)",
+        "image_url": null,
+        "favicon_url": "https://cheese-bmf.github.io/mint-cobalt-fig/assets/apple-touch-180.png"
+      }
+    }
+  },
+  {
+    "id": "favicon-svg-only",
+    "url": "https://cheese-bmf.github.io/mint-cobalt-fig/cases/favicon-svg-only/",
+    "rule": "SVG 아이콘 제외",
+    "expect": {
+      "code": 0,
+      "value": {
+        "title": "Fixture · SVG 아이콘만",
+        "favicon_url": "https://cheese-bmf.github.io/favicon.ico"
+      }
+    }
+  },
+  {
+    "id": "text-sanitize",
+    "url": "https://cheese-bmf.github.io/mint-cobalt-fig/cases/text-sanitize/",
+    "rule": "R13-strip",
+    "expect": {
+      "code": 0,
+      "value": {
+        "title": "줄 바꿈 뒤집기제로폭 👨‍👩‍👧 🏴"
+      }
+    }
+  },
+  {
+    "id": "text-cut",
+    "url": "https://cheese-bmf.github.io/mint-cobalt-fig/cases/text-cut/",
+    "rule": "R13-cut",
+    "expect": {
+      "code": 0,
+      "value": {
+        "title": "가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가",
+        "description": "다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다다"
+      }
+    }
+  },
+  {
+    "id": "meta-refresh",
+    "url": "https://cheese-bmf.github.io/mint-cobalt-fig/cases/meta-refresh/",
+    "rule": "R9 meta refresh 미추적",
+    "expect": {
+      "code": 0,
+      "value": {
+        "title": "Fixture · meta refresh 원본"
+      }
+    }
+  },
+  {
+    "id": "body-cap",
+    "url": "https://cheese-bmf.github.io/mint-cobalt-fig/cases/body-cap/",
+    "rule": "R10 본문 1MB 상한",
+    "expect": {
+      "code": null,
+      "value": {
+        "title": null
+      }
+    }
+  },
+  {
+    "id": "locale-ko",
+    "url": "https://cheese-bmf.github.io/mint-cobalt-fig/cases/locale-ko/",
+    "rule": "R16 선언 언어",
+    "expect": {
+      "code": 0,
+      "value": {
+        "title": "Fixture · 한국어 선언 페이지"
+      }
+    }
+  },
+  {
+    "id": "gaap-game-full",
+    "url": "https://cheese-bmf.github.io/mint-cobalt-fig/cases/gaap-game-full/",
+    "rule": "R14-game",
+    "expect": {
+      "code": 0,
+      "value": {
+        "type": "MOD",
+        "title": "Fixture · 게임 상세 페이지",
+        "mod": {
+          "card_type": "game",
+          "game_id": "lab_game_001",
+          "title": "랩 게임",
+          "image_url": "https://cheese-bmf.github.io/mint-cobalt-fig/assets/game-red.png",
+          "is_official": true,
+          "rating": 87,
+          "play_count": 12345
+        }
+      }
+    }
+  },
+  {
+    "id": "gaap-game-minimal",
+    "url": "https://cheese-bmf.github.io/mint-cobalt-fig/cases/gaap-game-minimal/",
+    "rule": "R14 필수만",
+    "expect": {
+      "code": 0,
+      "value": {
+        "type": "MOD",
+        "mod": {
+          "card_type": "game",
+          "game_id": "lab_game_min",
+          "is_official": false
+        }
+      },
+      "absent": [
+        "mod.title",
+        "mod.image_url",
+        "mod.rating",
+        "mod.play_count"
+      ]
+    }
+  },
+  {
+    "id": "gaap-channel-full",
+    "url": "https://cheese-bmf.github.io/mint-cobalt-fig/cases/gaap-channel-full/",
+    "rule": "R14 channel",
+    "expect": {
+      "code": 0,
+      "value": {
+        "type": "MOD",
+        "mod": {
+          "card_type": "channel",
+          "channel_id": "lab_channel_01",
+          "title": "랩 채널",
+          "profile_image_url": "https://cheese-bmf.github.io/mint-cobalt-fig/assets/profile-teal.png",
+          "is_official": true,
+          "follower_count": 3200,
+          "game_count": 7
+        }
+      }
+    }
+  },
+  {
+    "id": "gaap-play-together",
+    "url": "https://cheese-bmf.github.io/mint-cobalt-fig/cases/gaap-play-together/",
+    "rule": "R14 play_together",
+    "expect": {
+      "code": 0,
+      "value": {
+        "type": "MOD",
+        "mod": {
+          "card_type": "play_together",
+          "game_id": "lab_game_001",
+          "room_id": "room_42",
+          "title": "같이 하실 분",
+          "rating": 70,
+          "play_count": 99
+        }
+      }
+    }
+  },
+  {
+    "id": "gaap-play-missing-room",
+    "url": "https://cheese-bmf.github.io/mint-cobalt-fig/cases/gaap-play-missing-room/",
+    "rule": "R14-reject",
+    "expect": {
+      "code": 0,
+      "value": {
+        "type": "EXTERNAL",
+        "title": "Fixture · room_id 없는 함께하기"
+      },
+      "absent": [
+        "mod"
+      ]
+    }
+  },
+  {
+    "id": "gaap-unknown-type",
+    "url": "https://cheese-bmf.github.io/mint-cobalt-fig/cases/gaap-unknown-type/",
+    "rule": "R14-reject",
+    "expect": {
+      "code": 0,
+      "value": {
+        "type": "EXTERNAL"
+      },
+      "absent": [
+        "mod"
+      ]
+    }
+  },
+  {
+    "id": "gaap-invalid-id",
+    "url": "https://cheese-bmf.github.io/mint-cobalt-fig/cases/gaap-invalid-id/",
+    "rule": "R14-reject",
+    "expect": {
+      "code": 0,
+      "value": {
+        "type": "EXTERNAL"
+      },
+      "absent": [
+        "mod"
+      ]
+    }
+  },
+  {
+    "id": "gaap-optional-invalid",
+    "url": "https://cheese-bmf.github.io/mint-cobalt-fig/cases/gaap-optional-invalid/",
+    "rule": "R14-optional",
+    "expect": {
+      "code": 0,
+      "value": {
+        "type": "MOD",
+        "mod": {
+          "card_type": "game",
+          "game_id": "lab_game_opt",
+          "is_official": false
+        }
+      },
+      "absent": [
+        "mod.rating",
+        "mod.play_count"
+      ]
+    }
+  },
+  {
+    "id": "gaap-name-attr",
+    "url": "https://cheese-bmf.github.io/mint-cobalt-fig/cases/gaap-name-attr/",
+    "rule": "R14 property·name",
+    "expect": {
+      "code": 0,
+      "value": {
+        "type": "MOD",
+        "mod": {
+          "card_type": "game",
+          "game_id": "lab_game_name",
+          "title": "name 속성 게임"
+        }
+      }
+    }
+  },
+  {
+    "id": "gaap-title-cut",
+    "url": "https://cheese-bmf.github.io/mint-cobalt-fig/cases/gaap-title-cut/",
+    "rule": "R14 gaap:title 100",
+    "expect": {
+      "code": 0,
+      "value": {
+        "type": "MOD",
+        "mod": {
+          "title": "라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라라"
+        }
+      }
+    }
+  },
+  {
+    "id": "gaap-image-unsafe",
+    "url": "https://cheese-bmf.github.io/mint-cobalt-fig/cases/gaap-image-unsafe/",
+    "rule": "R14·R11",
+    "expect": {
+      "code": 0,
+      "value": {
+        "type": "MOD",
+        "mod": {
+          "title": "이미지 거른 게임"
+        }
+      },
+      "absent": [
+        "mod.image_url"
+      ]
+    }
+  },
+  {
+    "id": "gaap-image-base",
+    "url": "https://cheese-bmf.github.io/mint-cobalt-fig/cases/gaap-image-base/",
+    "rule": "R14-game <base href>",
+    "expect": {
+      "code": 0,
+      "value": {
+        "type": "MOD",
+        "mod": {
+          "image_url": "https://cheese-bmf.github.io/mint-cobalt-fig/assets/game-red.png"
+        }
+      }
+    }
+  },
+  {
+    "id": "gaap-badge-trim",
+    "url": "https://cheese-bmf.github.io/mint-cobalt-fig/cases/gaap-badge-trim/",
+    "rule": "R14 badge",
+    "expect": {
+      "code": 0,
+      "value": {
+        "type": "MOD",
+        "mod": {
+          "card_type": "channel",
+          "is_official": true
+        }
+      }
+    }
+  },
+  {
+    "id": "ssrf-nip-io",
+    "url": "https://169.254.169.254.nip.io/",
+    "rule": "R7-happy",
+    "direct": true
+  },
+  {
+    "id": "dead-host",
+    "url": "https://no-such-host.fixture-lab.invalid/",
+    "rule": "R7",
+    "direct": true
+  },
+  {
+    "id": "ip-literal",
+    "url": "https://1.1.1.1/",
+    "rule": "R7-syntax",
+    "direct": true
+  }
+]

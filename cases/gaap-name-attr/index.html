@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta property="og:title" content="Fixture · name 속성 태그">
+<meta property="og:description" content="gaap:* 커스텀 태그 케이스">
+<meta property="og:image" content="https://cheese-bmf.github.io/mint-cobalt-fig/assets/og-blue.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://cheese-bmf.github.io/mint-cobalt-fig/assets/icon-32.png">
+<meta name="gaap:card_type" content="game">
+<meta name="gaap:game_id" content="lab_game_name">
+<meta name="gaap:title" content="name 속성 게임">
+<style>
+:root{--bg:#f7f8fa;--fg:#1f2933;--muted:#6b7785;--card:#fff;--line:#e2e8f0;--accent:#6d28d9;--ok:#047857}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#111418;--fg:#e6e9ed;--muted:#9aa5b1;--card:#1a1f25;--line:#2c333b;--accent:#a78bfa;--ok:#34d399}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.55 -apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR",sans-serif}
+main{max-width:980px;margin:0 auto;padding:24px 16px 64px}h1{font-size:22px;margin:0 0 4px}h2{font-size:17px;margin:28px 0 8px}
+p{margin:6px 0}.muted{color:var(--muted)}a{color:var(--accent)}code,pre{font:13px/1.5 ui-monospace,SFMono-Regular,Menlo,monospace}
+pre{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px;overflow:auto;white-space:pre-wrap;word-break:break-all}
+table{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+th,td{text-align:left;vertical-align:top;padding:8px 10px;border-top:1px solid var(--line)}th{background:transparent;color:var(--muted);font-weight:600;border-top:0}
+.tag{display:inline-block;padding:1px 8px;border-radius:999px;border:1px solid var(--line);font-size:12px;color:var(--muted)}
+button{font:inherit;font-size:12px;padding:3px 8px;border-radius:6px;border:1px solid var(--line);background:var(--card);color:var(--fg);cursor:pointer}
+.wrap{overflow-x:auto}
+</style>
+</head>
+<body><main>
+<p><a href="../../">← 전체 케이스</a> · <span class="tag">B. 커스텀</span> <span class="tag">R14 property·name</span></p>
+<h1>gaap-name-attr</h1>
+<p>gaap:* 를 property 대신 name 속성으로 선언해도 읽는다</p>
+<h2>이 페이지의 &lt;head&gt; 태그</h2>
+<pre>&lt;meta property=&quot;og:title&quot; content=&quot;Fixture · name 속성 태그&quot;&gt;
+&lt;meta property=&quot;og:description&quot; content=&quot;gaap:* 커스텀 태그 케이스&quot;&gt;
+&lt;meta property=&quot;og:image&quot; content=&quot;https://cheese-bmf.github.io/mint-cobalt-fig/assets/og-blue.png&quot;&gt;
+&lt;link rel=&quot;icon&quot; type=&quot;image/png&quot; sizes=&quot;32x32&quot; href=&quot;https://cheese-bmf.github.io/mint-cobalt-fig/assets/icon-32.png&quot;&gt;
+&lt;meta name=&quot;gaap:card_type&quot; content=&quot;game&quot;&gt;
+&lt;meta name=&quot;gaap:game_id&quot; content=&quot;lab_game_name&quot;&gt;
+&lt;meta name=&quot;gaap:title&quot; content=&quot;name 속성 게임&quot;&gt;</pre>
+<h2>기대 응답</h2>
+<pre>{
+  &quot;code&quot;: 0,
+  &quot;value&quot;: {
+    &quot;type&quot;: &quot;MOD&quot;,
+    &quot;mod&quot;: {
+      &quot;card_type&quot;: &quot;game&quot;,
+      &quot;game_id&quot;: &quot;lab_game_name&quot;,
+      &quot;title&quot;: &quot;name 속성 게임&quot;
+    }
+  }
+}</pre>
+<h2>글쓰기 화면에서 보일 카드</h2>
+<p>제목 「name 속성 게임」</p>
+<p class="muted">URL: <code>https://cheese-bmf.github.io/mint-cobalt-fig/cases/gaap-name-attr/</code></p>
+
+</main></body>
+</html>
