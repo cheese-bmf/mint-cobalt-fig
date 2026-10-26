@@ -394,6 +394,220 @@
     }
   },
   {
+    "id": "gaap-img-mod",
+    "url": "https://cheese-bmf.github.io/mint-cobalt-fig/cases/gaap-img-mod/",
+    "rule": "이미지 ① mod",
+    "expect": {
+      "code": 0,
+      "value": {
+        "type": "MOD",
+        "image_url": "https://cheese-bmf.github.io/mint-cobalt-fig/assets/og-orange.png",
+        "mod": {
+          "image_url": "https://cheese-bmf.github.io/mint-cobalt-fig/assets/game-red.png"
+        }
+      }
+    }
+  },
+  {
+    "id": "gaap-img-og",
+    "url": "https://cheese-bmf.github.io/mint-cobalt-fig/cases/gaap-img-og/",
+    "rule": "이미지 ② og",
+    "expect": {
+      "code": 0,
+      "value": {
+        "type": "MOD",
+        "image_url": "https://cheese-bmf.github.io/mint-cobalt-fig/assets/og-orange.png"
+      },
+      "absent": [
+        "mod.image_url"
+      ]
+    }
+  },
+  {
+    "id": "gaap-img-apple",
+    "url": "https://cheese-bmf.github.io/mint-cobalt-fig/cases/gaap-img-apple/",
+    "rule": "이미지 ③ 아이콘",
+    "expect": {
+      "code": 0,
+      "value": {
+        "type": "MOD",
+        "image_url": null,
+        "favicon_url": "https://cheese-bmf.github.io/mint-cobalt-fig/assets/apple-touch-180.png"
+      },
+      "absent": [
+        "mod.image_url"
+      ]
+    }
+  },
+  {
+    "id": "gaap-img-icon-png",
+    "url": "https://cheese-bmf.github.io/mint-cobalt-fig/cases/gaap-img-icon-png/",
+    "rule": "이미지 ③ 아이콘",
+    "expect": {
+      "code": 0,
+      "value": {
+        "type": "MOD",
+        "image_url": null,
+        "favicon_url": "https://cheese-bmf.github.io/mint-cobalt-fig/assets/icon-32.png"
+      }
+    }
+  },
+  {
+    "id": "gaap-img-icon-ico",
+    "url": "https://cheese-bmf.github.io/mint-cobalt-fig/cases/gaap-img-icon-ico/",
+    "rule": "이미지 ③ 아이콘",
+    "expect": {
+      "code": 0,
+      "value": {
+        "type": "MOD",
+        "image_url": null,
+        "favicon_url": "https://cheese-bmf.github.io/mint-cobalt-fig/assets/icon-yellow.ico"
+      }
+    }
+  },
+  {
+    "id": "gaap-img-default",
+    "url": "https://cheese-bmf.github.io/mint-cobalt-fig/cases/gaap-img-default/",
+    "rule": "이미지 ④ 기본",
+    "expect": {
+      "code": 0,
+      "value": {
+        "type": "MOD",
+        "image_url": null,
+        "favicon_url": "https://cheese-bmf.github.io/favicon.ico"
+      }
+    }
+  },
+  {
+    "id": "gaap-img-broken",
+    "url": "https://cheese-bmf.github.io/mint-cobalt-fig/cases/gaap-img-broken/",
+    "rule": "로딩 실패 → 다음",
+    "expect": {
+      "code": 0,
+      "value": {
+        "type": "MOD",
+        "mod": {
+          "image_url": "https://cheese-bmf.github.io/mint-cobalt-fig/assets/missing.png"
+        }
+      }
+    }
+  },
+  {
+    "id": "gaap-img-broken-all",
+    "url": "https://cheese-bmf.github.io/mint-cobalt-fig/cases/gaap-img-broken-all/",
+    "rule": "로딩 실패 → 다음",
+    "expect": {
+      "code": 0,
+      "value": {
+        "type": "MOD",
+        "image_url": "https://cheese-bmf.github.io/mint-cobalt-fig/assets/missing.png",
+        "favicon_url": "https://cheese-bmf.github.io/mint-cobalt-fig/assets/missing-icon.png",
+        "mod": {
+          "image_url": "https://cheese-bmf.github.io/mint-cobalt-fig/assets/missing.png"
+        }
+      }
+    }
+  },
+  {
+    "id": "gaap-img-svg",
+    "url": "https://cheese-bmf.github.io/mint-cobalt-fig/cases/gaap-img-svg/",
+    "rule": "SVG 미렌더",
+    "expect": {
+      "code": 0,
+      "value": {
+        "type": "MOD",
+        "mod": {
+          "image_url": "https://cheese-bmf.github.io/mint-cobalt-fig/assets/icon.svg"
+        }
+      }
+    }
+  },
+  {
+    "id": "gaap-img-unsafe-all",
+    "url": "https://cheese-bmf.github.io/mint-cobalt-fig/cases/gaap-img-unsafe-all/",
+    "rule": "R11 스킴",
+    "expect": {
+      "code": 0,
+      "value": {
+        "type": "MOD",
+        "image_url": null,
+        "favicon_url": "https://cheese-bmf.github.io/mint-cobalt-fig/assets/apple-touch-180.png"
+      },
+      "absent": [
+        "mod.image_url"
+      ]
+    }
+  },
+  {
+    "id": "gaap-img-wide",
+    "url": "https://cheese-bmf.github.io/mint-cobalt-fig/cases/gaap-img-wide/",
+    "rule": "비율",
+    "expect": {
+      "code": 0,
+      "value": {
+        "type": "MOD",
+        "mod": {
+          "image_url": "https://cheese-bmf.github.io/mint-cobalt-fig/assets/wide-split.png"
+        }
+      }
+    }
+  },
+  {
+    "id": "gaap-img-channel-profile",
+    "url": "https://cheese-bmf.github.io/mint-cobalt-fig/cases/gaap-img-channel-profile/",
+    "rule": "채널 ① 프로필",
+    "expect": {
+      "code": 0,
+      "value": {
+        "type": "MOD",
+        "mod": {
+          "profile_image_url": "https://cheese-bmf.github.io/mint-cobalt-fig/assets/profile-teal.png"
+        }
+      }
+    }
+  },
+  {
+    "id": "gaap-img-channel-og",
+    "url": "https://cheese-bmf.github.io/mint-cobalt-fig/cases/gaap-img-channel-og/",
+    "rule": "채널 ② og",
+    "expect": {
+      "code": 0,
+      "value": {
+        "type": "MOD",
+        "image_url": "https://cheese-bmf.github.io/mint-cobalt-fig/assets/og-orange.png"
+      },
+      "absent": [
+        "mod.profile_image_url"
+      ]
+    }
+  },
+  {
+    "id": "gaap-img-channel-icon",
+    "url": "https://cheese-bmf.github.io/mint-cobalt-fig/cases/gaap-img-channel-icon/",
+    "rule": "채널 ③ 아이콘",
+    "expect": {
+      "code": 0,
+      "value": {
+        "type": "MOD",
+        "image_url": null,
+        "favicon_url": "https://cheese-bmf.github.io/mint-cobalt-fig/assets/apple-touch-180.png"
+      }
+    }
+  },
+  {
+    "id": "gaap-img-together-icon",
+    "url": "https://cheese-bmf.github.io/mint-cobalt-fig/cases/gaap-img-together-icon/",
+    "rule": "함께하기 ③ 아이콘",
+    "expect": {
+      "code": 0,
+      "value": {
+        "type": "MOD",
+        "image_url": null,
+        "favicon_url": "https://cheese-bmf.github.io/mint-cobalt-fig/assets/icon-32.png"
+      }
+    }
+  },
+  {
     "id": "ssrf-nip-io",
     "url": "https://169.254.169.254.nip.io/",
     "rule": "R7-happy",

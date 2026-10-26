@@ -24,10 +24,12 @@ def url(case_id):
     return f"{BASE}/cases/{case_id}/"
 
 
-def png(path, rgb, size=64):
-    """단색 PNG(외부 의존 없이)."""
-    row = b"\x00" + bytes(rgb) * size
-    raw = row * size
+def png(path, rgb, size=64, height=None, right=None):
+    """단색 PNG(외부 의존 없이). right 가 있으면 오른쪽 절반을 그 색으로 — 잘림(cover) 확인용."""
+    height = height or size
+    half = size // 2
+    row = b"\x00" + bytes(rgb) * half + bytes(right or rgb) * (size - half)
+    raw = row * height
 
     def chunk(kind, data):
         c = struct.pack(">I", len(data)) + kind + data
@@ -35,11 +37,18 @@ def png(path, rgb, size=64):
 
     data = (
         b"\x89PNG\r\n\x1a\n"
-        + chunk(b"IHDR", struct.pack(">IIBBBBB", size, size, 8, 2, 0, 0, 0))
+        + chunk(b"IHDR", struct.pack(">IIBBBBB", size, height, 8, 2, 0, 0, 0))
         + chunk(b"IDAT", zlib.compress(raw, 9))
         + chunk(b"IEND", b"")
     )
     path.write_bytes(data)
+    return data
+
+
+def ico(path, png_data, size):
+    """PNG 하나를 담은 ICO(Vista 형식)."""
+    head = struct.pack("<HHH", 0, 1, 1) + struct.pack("<BBBBHHII", size % 256, size % 256, 0, 0, 1, 32, len(png_data), 22)
+    path.write_bytes(head + png_data)
 
 
 def meta(name, content, attr="property"):
@@ -287,6 +296,144 @@ case(
     "og 제목·파란 이미지 카드",
 )
 
+# ── C. 커스텀 카드 이미지 자리 — 무엇이 그려지는가 ──
+# 서버는 이미지 본체를 가져오지 않는다(R11) — 없는 파일도 주소 그대로 내린다. 그래서 글쓰기 화면은
+# mod 이미지(채널은 프로필) → og:image → 사이트 아이콘(로고) → 기본 아이콘 순으로, 로딩 실패·SVG 면 다음으로 넘어간다.
+# 색으로 출처를 구분한다: 빨강 = gaap:image · 청록 = gaap:profile_image · 주황 = og:image · 보라 = apple-touch-icon
+# · 회색 = icon PNG · 노랑 = icon ICO · 반반(분홍|남색) = 가로로 긴 이미지.
+MISSING = f"{A}/missing.png"  # 404
+APPLE = f'<link rel="apple-touch-icon" sizes="180x180" href="{A}/apple-touch-180.png">'
+
+
+def gaap(card_type, id, title, *extra):
+    ids = {"game": [("game_id", id)], "channel": [("channel_id", id)],
+           "play_together": [("game_id", "lab_game_001"), ("room_id", id)]}[card_type]
+    return ([meta("gaap:card_type", card_type)] + [meta(f"gaap:{k}", v) for k, v in ids]
+            + [meta("gaap:title", title), meta("gaap:rating", "92"), meta("gaap:play_count", "4321"),
+               meta("gaap:follower_count", "1500"), meta("gaap:game_count", "3")] + list(extra))
+
+
+IMG = "C. 커스텀 이미지"
+case(
+    "gaap-img-mod", IMG, "이미지 ① mod",
+    "gaap:image·og:image·아이콘이 다 있으면 gaap:image",
+    [meta("og:title", "Fixture · 이미지 mod"), meta("og:image", f"{A}/og-orange.png"), ICON]
+    + gaap("game", "img_mod", "이미지 ① gaap:image", meta("gaap:image", f"{A}/game-red.png")),
+    {"code": 0, "value": {"type": "MOD", "image_url": f"{A}/og-orange.png", "mod": {"image_url": f"{A}/game-red.png"}}},
+    "빨간 이미지(gaap:image)",
+)
+case(
+    "gaap-img-og", IMG, "이미지 ② og",
+    "gaap:image 가 없으면 og:image",
+    [meta("og:title", "Fixture · 이미지 og"), meta("og:image", f"{A}/og-orange.png"), ICON]
+    + gaap("game", "img_og", "이미지 ② og:image"),
+    {"code": 0, "value": {"type": "MOD", "image_url": f"{A}/og-orange.png"}, "absent": ["mod.image_url"]},
+    "주황 이미지(og:image)",
+)
+case(
+    "gaap-img-apple", IMG, "이미지 ③ 아이콘",
+    "이미지가 전혀 없으면 사이트 아이콘을 로고로 — apple-touch-icon 이 icon 보다 먼저",
+    [meta("og:title", "Fixture · 이미지 apple-touch"), ICON, APPLE] + gaap("game", "img_apple", "이미지 ③ apple-touch-icon"),
+    {"code": 0, "value": {"type": "MOD", "image_url": None, "favicon_url": f"{A}/apple-touch-180.png"},
+     "absent": ["mod.image_url"]},
+    "보라 로고(apple-touch-icon)",
+)
+case(
+    "gaap-img-icon-png", IMG, "이미지 ③ 아이콘",
+    "icon PNG 만 있으면 그 아이콘을 로고로",
+    [meta("og:title", "Fixture · 이미지 icon png"), ICON] + gaap("game", "img_icon", "이미지 ③ icon PNG"),
+    {"code": 0, "value": {"type": "MOD", "image_url": None, "favicon_url": f"{A}/icon-32.png"}},
+    "회색 로고(icon PNG)",
+)
+case(
+    "gaap-img-icon-ico", IMG, "이미지 ③ 아이콘",
+    "icon 이 ICO 파일이어도 로고로(ICO 렌더 확인)",
+    [meta("og:title", "Fixture · 이미지 icon ico"), f'<link rel="icon" href="{A}/icon-yellow.ico">']
+    + gaap("game", "img_ico", "이미지 ③ icon ICO"),
+    {"code": 0, "value": {"type": "MOD", "image_url": None, "favicon_url": f"{A}/icon-yellow.ico"}},
+    "노란 로고(icon ICO)",
+)
+case(
+    "gaap-img-default", IMG, "이미지 ④ 기본",
+    "이미지·아이콘 선언이 없으면 서버는 루트 /favicon.ico 를 확인 없이 내림 → 404 라 기본 아이콘",
+    [meta("og:title", "Fixture · 이미지 기본")] + gaap("game", "img_default", "이미지 ④ 기본 아이콘"),
+    {"code": 0, "value": {"type": "MOD", "image_url": None, "favicon_url": "https://cheese-bmf.github.io/favicon.ico"}},
+    "기본 아이콘(지구본)",
+)
+case(
+    "gaap-img-broken", IMG, "로딩 실패 → 다음",
+    "gaap:image 가 404 면 og:image 로",
+    [meta("og:title", "Fixture · 이미지 깨짐"), meta("og:image", f"{A}/og-orange.png"), ICON]
+    + gaap("game", "img_broken", "gaap:image 404 → og", meta("gaap:image", MISSING)),
+    {"code": 0, "value": {"type": "MOD", "mod": {"image_url": MISSING}}},
+    "주황 이미지(og:image)",
+)
+case(
+    "gaap-img-broken-all", IMG, "로딩 실패 → 다음",
+    "gaap:image·og:image·icon 이 모두 404 면 기본 아이콘",
+    [meta("og:title", "Fixture · 이미지 전부 깨짐"), meta("og:image", MISSING),
+     f'<link rel="icon" type="image/png" href="{A}/missing-icon.png">']
+    + gaap("game", "img_broken_all", "전부 404 → 기본", meta("gaap:image", MISSING)),
+    {"code": 0, "value": {"type": "MOD", "image_url": MISSING, "favicon_url": f"{A}/missing-icon.png",
+                          "mod": {"image_url": MISSING}}},
+    "기본 아이콘(지구본)",
+)
+case(
+    "gaap-img-svg", IMG, "SVG 미렌더",
+    "gaap:image 가 SVG 면 그리지 않고 og:image 로(서버는 SVG 이미지를 거르지 않는다)",
+    [meta("og:title", "Fixture · 이미지 SVG"), meta("og:image", f"{A}/og-orange.png"), ICON]
+    + gaap("game", "img_svg", "SVG gaap:image → og", meta("gaap:image", f"{A}/icon.svg")),
+    {"code": 0, "value": {"type": "MOD", "mod": {"image_url": f"{A}/icon.svg"}}},
+    "주황 이미지(og:image) — 노란 원(SVG)이 보이면 실패",
+)
+case(
+    "gaap-img-unsafe-all", IMG, "R11 스킴",
+    "gaap:image·og:image 가 모두 javascript: 면 서버가 둘 다 버림 → 아이콘 로고",
+    [meta("og:title", "Fixture · 이미지 javascript"), meta("og:image", "javascript:alert(1)"), APPLE]
+    + gaap("game", "img_js", "javascript: → 아이콘", meta("gaap:image", "javascript:alert(2)")),
+    {"code": 0, "value": {"type": "MOD", "image_url": None, "favicon_url": f"{A}/apple-touch-180.png"},
+     "absent": ["mod.image_url"]},
+    "보라 로고(apple-touch-icon)",
+)
+case(
+    "gaap-img-wide", IMG, "비율",
+    "가로로 긴 gaap:image(240×120)는 정사각 자리에 맞춰 가운데를 잘라 채움",
+    [meta("og:title", "Fixture · 이미지 가로형"), ICON]
+    + gaap("game", "img_wide", "가로형 gaap:image", meta("gaap:image", f"{A}/wide-split.png")),
+    {"code": 0, "value": {"type": "MOD", "mod": {"image_url": f"{A}/wide-split.png"}}},
+    "분홍|남색 반반 이미지가 찌그러지지 않고 잘려 보임",
+)
+case(
+    "gaap-img-channel-profile", IMG, "채널 ① 프로필",
+    "channel 은 gaap:profile_image 를 원형으로",
+    [meta("og:title", "Fixture · 채널 프로필"), meta("og:image", f"{A}/og-orange.png"), ICON]
+    + gaap("channel", "img_ch_profile", "채널 ① 프로필", meta("gaap:profile_image", f"{A}/profile-teal.png")),
+    {"code": 0, "value": {"type": "MOD", "mod": {"profile_image_url": f"{A}/profile-teal.png"}}},
+    "청록 원형 이미지",
+)
+case(
+    "gaap-img-channel-og", IMG, "채널 ② og",
+    "channel 에 프로필 이미지가 없으면 og:image 를 원형으로",
+    [meta("og:title", "Fixture · 채널 og"), meta("og:image", f"{A}/og-orange.png"), ICON]
+    + gaap("channel", "img_ch_og", "채널 ② og:image"),
+    {"code": 0, "value": {"type": "MOD", "image_url": f"{A}/og-orange.png"}, "absent": ["mod.profile_image_url"]},
+    "주황 원형 이미지",
+)
+case(
+    "gaap-img-channel-icon", IMG, "채널 ③ 아이콘",
+    "channel 에 이미지가 전혀 없으면 사이트 아이콘을 원형 자리의 로고로",
+    [meta("og:title", "Fixture · 채널 아이콘"), APPLE] + gaap("channel", "img_ch_icon", "채널 ③ apple-touch-icon"),
+    {"code": 0, "value": {"type": "MOD", "image_url": None, "favicon_url": f"{A}/apple-touch-180.png"}},
+    "원형 자리에 보라 로고",
+)
+case(
+    "gaap-img-together-icon", IMG, "함께하기 ③ 아이콘",
+    "play_together 에 이미지가 없으면 사이트 아이콘 로고 + 함께하기 버튼",
+    [meta("og:title", "Fixture · 함께하기 아이콘"), ICON] + gaap("play_together", "img_room", "함께하기 ③ icon PNG"),
+    {"code": 0, "value": {"type": "MOD", "image_url": None, "favicon_url": f"{A}/icon-32.png"}},
+    "회색 로고 + 「함께하기」",
+)
+
 # 페이지 없이 글쓰기에 직접 넣는 케이스(목록에만 표시)
 DIRECT = [
     ("ssrf-nip-io", "R7-happy", "https://169.254.169.254.nip.io/", "사설 IP 로 해석되는 호스트 — 다른 실패와 같은 200 + 620002 최소 카드",
@@ -332,6 +479,8 @@ def build():
         ("icon-32.png", (71, 85, 105), 32), ("apple-touch-180.png", (124, 58, 237), 180),
     ]:
         png(assets / name, rgb, size)
+    png(assets / "wide-split.png", (236, 72, 153), 240, 120, (30, 58, 138))
+    ico(assets / "icon-yellow.ico", png(assets / "icon-yellow.png", (234, 179, 8), 32), 32)
     (assets / "icon.svg").write_text(
         '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><circle cx="16" cy="16" r="14" fill="#f59e0b"/></svg>\n'
     )
@@ -363,7 +512,7 @@ def build():
                 f'<td>{html.escape(c["summary"])}</td><td>{html.escape(c["testui"])}</td>'
                 f'<td><button data-copy="{u}">URL 복사</button></td></tr>'
             )
-    rows.append('<tr><th colspan="4">C. 직접 입력(페이지 없음)</th></tr>')
+    rows.append('<tr><th colspan="4">D. 직접 입력(페이지 없음)</th></tr>')
     for id, rule, u, summary, testui in DIRECT:
         rows.append(
             f'<tr><td>{id}<br><span class="tag">{rule}</span></td><td>{html.escape(summary)}<br><code>{u}</code></td>'
